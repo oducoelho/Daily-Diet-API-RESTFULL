@@ -1,23 +1,9 @@
-import fastify from 'fastify'
-import { knex } from './database'
-import { randomUUID } from 'crypto'
-
-const app = fastify()
-
-app.get('/hello', async () => {
-  const user = await knex('users')
-    .insert({
-      id: randomUUID(),
-      name: 'test',
-    })
-    .returning('*')
-
-  return user
-})
+import { app } from './app'
+import { env } from './env'
 
 app
   .listen({
-    port: 3333,
+    port: env.PORT,
   })
   .then(() => {
     console.log('Server is Runnning!')

@@ -1,16 +1,16 @@
 import { Knex } from 'knex'
 
 export async function up(knex: Knex): Promise<void> {
-  await knex.schema.alterTable('users', (table) => {
+  await knex.schema.alterTable('meals', (table) => {
     table.uuid('id').primary()
+    table.text('session_id').notNullable()
     table.text('name').notNullable()
     table.text('description').notNullable()
+    table.text('is_diet').notNullable()
     table.timestamp('created_at').defaultTo(knex.fn.now()).notNullable()
   })
 }
 
 export async function down(knex: Knex): Promise<void> {
-  await knex.schema.alterTable('users', (table) => {
-    table.dropColumn('users')
-  })
+  await knex.schema.dropTable('meals')
 }
